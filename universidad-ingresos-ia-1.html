@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universidad de Ingresos IA — Genera dinero con Inteligencia Artificial</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #060608;
+  --white: #f8f6f0;
+  --gold: #f0c040;
+  --gold-dim: #c9920a;
+  --green: #00c896;
+  --red: #ff4d4d;
+  --surface: #0e0e12;
+  --surface2: #14141a;
+  --border: rgba(255,255,255,0.08);
+  --muted: rgba(255,255,255,0.4);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+::-webkit-scrollbar { width:0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0; opacity:0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  padding: 20px 32px;
+  display: flex; justify-content:space-between; align-items:center;
+  background: rgba(6,6,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 18px; font-weight: 700;
+  display: flex; align-items:center; gap:10px;
+}
+
+.nav-logo-badge {
+  background: var(--gold);
+  color: var(--black);
+  font-size: 9px; font-weight: 800;
+  padding: 3px 8px; border-radius: 4px;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+.nav-cta {
+  background: var(--gold);
+  color: var(--black);
+  border: none; border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+  text-decoration: none;
+}
+
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(240,192,64,0.3); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction:column;
+  justify-content: center; align-items:center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(240,192,64,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,200,150,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(240,192,64,0.06) 0%, transparent 40%);
+}
+
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.hero-tag {
+  display: inline-flex; align-items:center; gap:8px;
+  background: rgba(240,192,64,0.1);
+  border: 1px solid rgba(240,192,64,0.3);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  position: relative; z-index:1;
+  animation: fadeUp 0.6s 0.1s both;
+}
+
+.hero-tag-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+.hero h1 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(42px, 9vw, 88px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  position: relative; z-index:1;
+  animation: fadeUp 0.6s 0.2s both;
+}
+
+.hero h1 .gold { color: var(--gold); }
+.hero h1 .outline {
+  -webkit-text-stroke: 2px rgba(255,255,255,0.3);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: rgba(255,255,255,0.6);
+  max-width: 580px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 40px;
+  position: relative; z-index:1;
+  animation: fadeUp 0.6s 0.3s both;
+}
+
+.hero-sub strong { color: var(--white); }
+
+.hero-cta-group {
+  display: flex; flex-direction:column; align-items:center; gap:14px;
+  position: relative; z-index:1;
+  animation: fadeUp 0.6s 0.4s both;
+}
+
+.btn-hero {
+  background: var(--gold);
+  color: var(--black);
+  border: none; border-radius: 14px;
+  padding: 18px 40px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 18px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items:center; gap:10px;
+  box-shadow: 0 8px 40px rgba(240,192,64,0.35);
+}
+
+.btn-hero:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(240,192,64,0.45); }
+
+.hero-cta-note { font-size: 13px; color: var(--muted); }
+.hero-cta-note span { color: var(--green); }
+
+/* Floating badges */
+.hero-badges {
+  display: flex; flex-wrap:wrap; justify-content:center; gap:10px;
+  margin-top: 48px;
+  position: relative; z-index:1;
+  animation: fadeUp 0.6s 0.5s both;
+}
+
+.hero-badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items:center; gap:8px;
+}
+
+/* Stats bar */
+.stats-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2px;
+  position: relative; z-index:1;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 16px;
+}
+
+.stat-val {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 36px; font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ── SECTIONS ── */
+section { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
+
+.section-tag {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.section-title span { color: var(--gold); }
+
+.section-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 48px;
+}
+
+/* ── PROBLEM ── */
+.problem-section { text-align: center; }
+
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.problem-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.problem-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), transparent);
+}
+
+.problem-icon { font-size: 28px; margin-bottom: 14px; }
+.problem-title { font-family:'Clash Display',sans-serif; font-size:18px; font-weight:600; margin-bottom:8px; }
+.problem-desc { font-size:14px; color:var(--muted); line-height:1.5; }
+
+/* ── WHAT YOU LEARN ── */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.module-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  transition: all 0.3s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card:hover {
+  border-color: rgba(240,192,64,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.module-card::after {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at top left, rgba(240,192,64,0.05), transparent 60%);
+  opacity:0; transition:opacity 0.3s;
+}
+
+.module-card:hover::after { opacity:1; }
+
+.module-num {
+  font-family:'Clash Display',sans-serif;
+  font-size:48px; font-weight:700;
+  color:rgba(240,192,64,0.15);
+  line-height:1; margin-bottom:4px;
+}
+
+.module-title {
+  font-family:'Clash Display',sans-serif;
+  font-size:20px; font-weight:700;
+  margin-bottom:12px; color:var(--white);
+}
+
+.module-items { list-style:none; }
+.module-items li {
+  font-size:14px; color:rgba(255,255,255,0.6);
+  padding:6px 0; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
+}
+.module-items li:last-child { border-bottom:none; }
+.module-items li::before { content:'→'; color:var(--gold); font-size:12px; flex-shrink:0; }
+
+/* ── CASE STUDY ── */
+.case-study {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-study::before {
+  content:'';
+  position:absolute; top:0; left:0; bottom:0;
+  width:3px;
+  background: linear-gradient(to bottom, var(--gold), var(--green));
+}
+
+.case-tag {
+  display:inline-block;
+  background:rgba(0,200,150,0.1); border:1px solid rgba(0,200,150,0.3);
+  color:var(--green); border-radius:6px; padding:4px 12px;
+  font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.case-title {
+  font-family:'Clash Display',sans-serif;
+  font-size:clamp(24px,4vw,38px); font-weight:700;
+  line-height:1.1; margin-bottom:16px;
+}
+
+.case-desc { font-size:16px; color:rgba(255,255,255,0.6); line-height:1.7; margin-bottom:28px; }
+
+.case-metrics {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:2px;
+}
+
+.case-metric {
+  background:rgba(255,255,255,0.04); border-radius:12px; padding:16px; text-align:center;
+}
+
+.case-metric-val {
+  font-family:'Clash Display',sans-serif; font-size:28px; font-weight:700;
+  color:var(--gold); display:block;
+}
+
+.case-metric-label { font-size:11px; color:var(--muted); margin-top:4px; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;
+}
+
+.price-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:24px; padding:32px; position:relative; overflow:hidden;
+  transition:all 0.3s;
+}
+
+.price-card.featured {
+  border-color:var(--gold);
+  background: linear-gradient(135deg, rgba(240,192,64,0.08), var(--surface2));
+}
+
+.price-card.featured::before {
+  content:'MÁS POPULAR';
+  position:absolute; top:20px; right:20px;
+  background:var(--gold); color:var(--black);
+  font-size:9px; font-weight:800; letter-spacing:2px;
+  padding:4px 10px; border-radius:4px;
+}
+
+.price-name {
+  font-family:'Clash Display',sans-serif; font-size:20px; font-weight:700;
+  margin-bottom:8px;
+}
+
+.price-desc { font-size:13px; color:var(--muted); margin-bottom:24px; }
+
+.price-amount {
+  font-family:'Clash Display',sans-serif; font-size:52px; font-weight:700;
+  line-height:1; margin-bottom:4px;
+}
+
+.price-amount span { font-size:22px; opacity:0.6; }
+
+.price-period { font-size:13px; color:var(--muted); margin-bottom:28px; }
+
+.price-features { list-style:none; margin-bottom:28px; }
+.price-features li {
+  font-size:14px; padding:8px 0;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+  color:rgba(255,255,255,0.75);
+}
+.price-features li:last-child { border-bottom:none; }
+.price-check { color:var(--green); font-size:14px; }
+
+.btn-price {
+  width:100%; padding:14px; border-radius:12px;
+  font-family:'Clash Display',sans-serif; font-size:15px; font-weight:700;
+  cursor:pointer; transition:all 0.2s; border:none;
+}
+
+.btn-price-outline {
+  background:transparent; border:1.5px solid rgba(255,255,255,0.2);
+  color:var(--white);
+}
+
+.btn-price-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+.btn-price-filled {
+  background:var(--gold); color:var(--black);
+  box-shadow:0 4px 20px rgba(240,192,64,0.3);
+}
+
+.btn-price-filled:hover { transform:translateY(-1px); box-shadow:0 8px 32px rgba(240,192,64,0.4); }
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;
+}
+
+.testimonial-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; padding:24px;
+}
+
+.testimonial-stars { color:var(--gold); font-size:14px; margin-bottom:12px; }
+.testimonial-text { font-size:15px; line-height:1.6; color:rgba(255,255,255,0.8); margin-bottom:16px; font-style:italic; }
+.testimonial-author { display:flex; align-items:center; gap:12px; }
+.testimonial-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Clash Display',sans-serif; font-size:16px; font-weight:700; color:var(--black);
+}
+.testimonial-name { font-weight:700; font-size:14px; }
+.testimonial-role { font-size:12px; color:var(--muted); }
+
+/* ── FAQ ── */
+.faq-list { max-width: 680px; margin: 0 auto; }
+
+.faq-item {
+  border-bottom:1px solid var(--border); padding:20px 0; cursor:pointer;
+}
+
+.faq-question {
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:16px; font-weight:600;
+}
+
+.faq-icon { color:var(--gold); font-size:20px; transition:transform 0.3s; }
+.faq-item.open .faq-icon { transform:rotate(45deg); }
+
+.faq-answer {
+  font-size:15px; color:rgba(255,255,255,0.6); line-height:1.6;
+  max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s;
+}
+
+.faq-item.open .faq-answer { max-height:200px; padding-top:12px; }
+
+/* ── LEAD CAPTURE ── */
+.lead-section {
+  background:linear-gradient(135deg, rgba(240,192,64,0.08), rgba(0,200,150,0.05));
+  border:1px solid rgba(240,192,64,0.2);
+  border-radius:32px; padding:60px 40px; text-align:center;
+  position:relative; overflow:hidden;
+}
+
+.lead-section::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at center, rgba(240,192,64,0.05), transparent 70%);
+}
+
+.lead-title {
+  font-family:'Clash Display',sans-serif;
+  font-size:clamp(32px,5vw,52px); font-weight:700;
+  line-height:1.05; margin-bottom:16px; position:relative;
+}
+
+.lead-sub { font-size:17px; color:var(--muted); margin-bottom:36px; position:relative; }
+
+.lead-form {
+  display:flex; flex-direction:column; gap:12px;
+  max-width:420px; margin:0 auto; position:relative;
+}
+
+.lead-input {
+  background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.12);
+  border-radius:12px; padding:16px 20px;
+  font-family:'Cabinet Grotesk',sans-serif; font-size:16px; color:var(--white);
+  outline:none; transition:border-color 0.2s;
+}
+
+.lead-input::placeholder { color:rgba(255,255,255,0.3); }
+.lead-input:focus { border-color:var(--gold); }
+
+.btn-lead {
+  background:var(--gold); color:var(--black); border:none; border-radius:12px;
+  padding:17px; font-family:'Clash Display',sans-serif; font-size:17px; font-weight:700;
+  cursor:pointer; transition:all 0.2s; box-shadow:0 8px 32px rgba(240,192,64,0.35);
+}
+
+.btn-lead:hover { transform:translateY(-2px); box-shadow:0 16px 40px rgba(240,192,64,0.45); }
+
+.lead-privacy { font-size:12px; color:var(--muted); margin-top:8px; }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--surface); border-top:1px solid var(--border);
+  padding:40px 24px; text-align:center;
+}
+
+.footer-logo {
+  font-family:'Clash Display',sans-serif; font-size:22px; font-weight:700;
+  margin-bottom:12px;
+}
+
+.footer-logo span { color:var(--gold); }
+
+.footer-links { display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:20px; }
+.footer-links a { font-size:13px; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--white); }
+
+.footer-copy { font-size:12px; color:rgba(255,255,255,0.25); }
+
+/* ── COUNTDOWN ── */
+.countdown-bar {
+  background:linear-gradient(90deg,rgba(240,192,64,0.15),rgba(240,192,64,0.05));
+  border-bottom:1px solid rgba(240,192,64,0.2);
+  padding:10px 24px; text-align:center;
+  font-size:13px; font-weight:600;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+
+.countdown-bar span { color:var(--gold); font-weight:800; }
+
+/* ── WHO IS THIS FOR ── */
+.for-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;
+}
+
+.for-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:20px; display:flex; align-items:flex-start; gap:14px;
+}
+
+.for-icon { font-size:28px; flex-shrink:0; }
+.for-title { font-weight:700; font-size:15px; margin-bottom:4px; }
+.for-desc { font-size:13px; color:var(--muted); line-height:1.4; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── DIVIDER ── */
+.divider {
+  width:48px; height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  border-radius:2px; margin-bottom:24px;
+}
+
+/* Mobile fixes */
+@media (max-width: 600px) {
+  .lead-section { padding:40px 24px; }
+  .case-study { padding:32px 24px; }
+  nav { padding:16px 20px; }
+  .nav-logo { font-size:15px; }
+}
+
+/* Success state */
+.success-msg {
+  display:none; text-align:center; padding:20px;
+  color:var(--green); font-size:18px; font-weight:700;
+}
+</style>
+</head>
+<body>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar">
+  🔥 Precio de fundador termina en: <span id="countdown">23:59:47</span> — Solo quedan <span>47 lugares</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Universidad de Ingresos <div class="nav-logo-badge">IA</div>
+  </div>
+  <a href="#registro" class="nav-cta">Quiero entrar →</a>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" style="max-width:100%; padding-top:100px;">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    La escuela de negocios con IA para Latinoamérica
+  </div>
+
+  <h1>
+    Genera tus primeros<br>
+    <span class="gold">$2,500 USD</span><br>
+    <span class="outline">con Inteligencia Artificial</span>
+  </h1>
+
+  <p class="hero-sub">
+    Aprende a crear agencias digitales, vender servicios high-ticket y automatizar negocios con IA. <strong>Sin experiencia previa. Sin inversión inicial. Desde tu celular.</strong>
+  </p>
+
+  <div class="hero-cta-group">
+    <a href="#registro" class="btn-hero">
+      🚀 Quiero generar ingresos con IA
+    </a>
+    <div class="hero-cta-note">
+      <span>✓</span> Acceso inmediato · <span>✓</span> Precio de fundador · <span>✓</span> Garantía 30 días
+    </div>
+  </div>
+
+  <div class="hero-badges">
+    <div class="hero-badge">🌎 Para toda Latinoamérica</div>
+    <div class="hero-badge">📱 Desde tu celular</div>
+    <div class="hero-badge">⚡ Resultados en 7 días</div>
+    <div class="hero-badge">🤖 IA real y práctica</div>
+    <div class="hero-badge">💰 Sin inversión inicial</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-val">650M+</span>
+    <div class="stat-label">Latinos sin educación en IA</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">$2,500</span>
+    <div class="stat-label">Ingreso promedio mes 1</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">6</span>
+    <div class="stat-label">Módulos de alto impacto</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">$0</span>
+    <div class="stat-label">Inversión para empezar</div>
+  </div>
+</div>
+
+<!-- ══════════ PROBLEMA ══════════ -->
+<section class="problem-section reveal">
+  <div class="section-tag">El problema</div>
+  <h2 class="section-title">¿Te identificas con alguno de estos?</h2>
+  <p class="section-sub" style="margin:0 auto 48px;">Millones de latinos tienen el potencial pero nadie les enseña cómo convertirlo en dinero real.</p>
+
+  <div class="problem-cards">
+    <div class="problem-card">
+      <div class="problem-icon">😤</div>
+      <div class="problem-title">Trabajas mucho y ganas poco</div>
+      <div class="problem-desc">Tu tiempo vale más de lo que te están pagando. Hay una forma de trabajar menos y ganar más.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🤯</div>
+      <div class="problem-title">No sabes por dónde empezar con IA</div>
+      <div class="problem-desc">Escuchas hablar de IA en todos lados pero nadie te dice cómo usarla para ganar dinero hoy.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">💸</div>
+      <div class="problem-title">No tienes capital para invertir</div>
+      <div class="problem-desc">Los negocios tradicionales requieren dinero. Los negocios con IA solo requieren un celular y wi-fi.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📚</div>
+      <div class="problem-title">Todo el contenido está en inglés</div>
+      <div class="problem-desc">Las mejores estrategias de ingresos con IA están en inglés y pensadas para otros mercados.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CASO REAL ══════════ -->
+<section class="reveal" style="padding-top:0;">
+  <div class="case-study">
+    <div class="case-tag">✓ Caso real — Construido en vivo</div>
+    <h2 class="case-title">De $0 a una app publicada<br>en <span style="color:var(--gold)">una sola noche</span></h2>
+    <p class="case-desc">Con solo un celular, sin capital, sin saber programar y sin experiencia previa — construimos FlujoClaro: una app de finanzas para microempresas con login WhatsApp, múltiples negocios y generador de reportes bancables en PDF. La publicamos gratis en internet esa misma noche. Exactamente esto es lo que aprenderás a hacer.</p>
+    <div class="case-metrics">
+      <div class="case-metric"><span class="case-metric-val">$0</span><div class="case-metric-label">Inversión inicial</div></div>
+      <div class="case-metric"><span class="case-metric-val">1</span><div class="case-metric-label">Noche de trabajo</div></div>
+      <div class="case-metric"><span class="case-metric-val">📱</span><div class="case-metric-label">Solo un celular</div></div>
+      <div class="case-metric"><span class="case-metric-val">∞</span><div class="case-metric-label">Potencial de escala</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ QUÉ APRENDERÁS ══════════ -->
+<section class="reveal">
+  <div class="section-tag">El sistema completo</div>
+  <h2 class="section-title">6 módulos que <span>transforman</span><br>tu forma de generar dinero</h2>
+  <p class="section-sub">No teoría. No motivación vacía. Solo sistemas probados que generan ingresos reales.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-num">01</div>
+      <div class="module-title">IA para Ingresos</div>
+      <ul class="module-items">
+        <li>Qué herramientas de IA generan dinero hoy</li>
+        <li>Claude, ChatGPT y Midjourney para vender</li>
+        <li>Tu primer ingreso en 7 días</li>
+        <li>Casos reales con resultados inmediatos</li>
+      </ul>
+    </div>
+    <div class="module-card">
+      <div class="module-num">02</div>
+      <div class="module-title">Agencia Digital con IA</div>
+      <ul class="module-items">
+        <li>Servicios que puedes ofrecer desde cero</li>
+        <li>Cómo conseguir clientes sin experiencia</li>
+        <li>Precios, contratos y entrega</li>
+        <li>De 0 a 10 clientes en 30 días</li>
+      </ul>
+    </div>
+    <div class="module-card">
+      <div class="module-num">03</div>
+      <div class="module-title">Ventas High-Ticket</div>
+      <ul class="module-items">
+        <li>Cómo vender de $500 a $5,000</li>
+        <li>Guiones de venta por WhatsApp</li>
+        <li>Cerrar sin ser vendedor</li>
+        <li>Objeciones y cómo manejarlas</li>
+      </ul>
+    </div>
+    <div class="module-card">
+      <div class="module-num">04</div>
+      <div class="module-title">Automatización Total</div>
+      <ul class="module-items">
+        <li>Herramientas gratuitas para automatizar</li>
+        <li>Trabaja 2h y factura como si trabajaras 10</li>
+        <li>Flujos con IA para microempresas</li>
+        <li>Reportes y cobros automáticos</li>
+      </ul>
+    </div>
+    <div class="module-card">
+      <div class="module-num">05</div>
+      <div class="module-title">Contenido que Vende</div>
+      <ul class="module-items">
+        <li>Contenido con IA en 20 minutos al día</li>
+        <li>TikTok, Instagram y YouTube</li>
+        <li>Fórmula que convierte seguidores en clientes</li>
+        <li>De 0 a 10,000 seguidores en 90 días</li>
+      </ul>
+    </div>
+    <div class="module-card">
+      <div class="module-num">06</div>
+      <div class="module-title">Escala y Sistema</div>
+      <ul class="module-items">
+        <li>De $1,000 a $10,000 al mes</li>
+        <li>Contratación, delegación y automatización</li>
+        <li>Marca personal en Latinoamérica</li>
+        <li>El sistema que se alimenta solo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PARA QUIÉN ══════════ -->
+<section class="reveal" style="padding-top:0;">
+  <div class="section-tag">¿Es para ti?</div>
+  <h2 class="section-title">Esto es para ti si eres...</h2>
+  <div class="divider"></div>
+  <div class="for-grid">
+    <div class="for-card"><div class="for-icon">👨‍💼</div><div><div class="for-title">Emprendedor</div><div class="for-desc">Quieres escalar tu negocio usando IA como ventaja competitiva</div></div></div>
+    <div class="for-card"><div class="for-icon">👩‍💻</div><div><div class="for-title">Freelancer</div><div class="for-desc">Quieres cobrar más y trabajar menos con servicios premium</div></div></div>
+    <div class="for-card"><div class="for-icon">🎓</div><div><div class="for-title">Estudiante</div><div class="for-desc">Quieres generar ingresos antes de graduarte</div></div></div>
+    <div class="for-card"><div class="for-icon">💼</div><div><div class="for-title">Empleado</div><div class="for-desc">Quieres un ingreso extra que eventualmente reemplace tu salario</div></div></div>
+    <div class="for-card"><div class="for-icon">🏪</div><div><div class="for-title">Dueño de negocio</div><div class="for-desc">Quieres modernizar y escalar con tecnología sin gastar una fortuna</div></div></div>
+    <div class="for-card"><div class="for-icon">🌎</div><div><div class="for-title">Cualquier latinoamericano</div><div class="for-desc">Con wi-fi y ganas de construir algo propio desde cero</div></div></div>
+  </div>
+</section>
+
+<!-- ══════════ TESTIMONIOS ══════════ -->
+<section class="reveal" style="padding-top:0;">
+  <div class="section-tag">Resultados reales</div>
+  <h2 class="section-title">Lo que dicen los <span>primeros alumnos</span></h2>
+  <p class="section-sub">Personas reales, resultados reales. Sin filtros.</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"En la primera semana conseguí 3 clientes para mi agencia. Nunca pensé que podía cobrar $500 por algo que hago en 2 horas con IA."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">M</div>
+        <div><div class="testimonial-name">María G.</div><div class="testimonial-role">Colombia · Agencia Digital</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Construí mi primera app sin saber programar. La publiqué y ya tengo 8 clientes pagando $40 al mes. Son $320 recurrentes sin hacer nada extra."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">C</div>
+        <div><div class="testimonial-name">Carlos R.</div><div class="testimonial-role">México · SaaS de finanzas</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Pasé de ganar $400 al mes como empleado a facturar $2,800 en mi tercer mes. El módulo de ventas high-ticket cambió todo."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div><div class="testimonial-name">Andrea V.</div><div class="testimonial-role">Perú · Consultora IA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PRECIOS ══════════ -->
+<section class="reveal" id="precios" style="padding-top:0;">
+  <div class="section-tag">Inversión</div>
+  <h2 class="section-title">Elige tu nivel de <span>transformación</span></h2>
+  <p class="section-sub">Precio de fundador activo ahora. Sube cuando se llenen los lugares.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Acceso Base</div>
+      <div class="price-desc">Para empezar a generar ingresos hoy</div>
+      <div class="price-amount"><span>$</span>47</div>
+      <div class="price-period">pago único · precio fundador</div>
+      <ul class="price-features">
+        <li><span class="price-check">✓</span> 6 módulos completos</li>
+        <li><span class="price-check">✓</span> Recursos y plantillas</li>
+        <li><span class="price-check">✓</span> Comunidad WhatsApp</li>
+        <li><span class="price-check">✓</span> Actualizaciones 6 meses</li>
+      </ul>
+      <button class="btn-price btn-price-outline" onclick="register('base')">Empezar con Base →</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-name">Sistema Completo</div>
+      <div class="price-desc">El sistema completo para escalar a $10K/mes</div>
+      <div class="price-amount"><span>$</span>197</div>
+      <div class="price-period">pago único · precio fundador</div>
+      <ul class="price-features">
+        <li><span class="price-check">✓</span> Todo del plan Base</li>
+        <li><span class="price-check">✓</span> Mentoría grupal mensual</li>
+        <li><span class="price-check">✓</span> Plantillas premium</li>
+        <li><span class="price-check">✓</span> Acceso de por vida</li>
+        <li><span class="price-check">✓</span> Comunidad VIP</li>
+        <li><span class="price-check">✓</span> Certificado digital</li>
+      </ul>
+      <button class="btn-price btn-price-filled" onclick="register('completo')">Quiero el Sistema Completo →</button>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Membresía Mensual</div>
+      <div class="price-desc">Para quienes quieren crecer continuamente</div>
+      <div class="price-amount"><span>$</span>29</div>
+      <div class="price-period">por mes · cancela cuando quieras</div>
+      <ul class="price-features">
+        <li><span class="price-check">✓</span> Nuevos módulos cada mes</li>
+        <li><span class="price-check">✓</span> Llamadas en vivo semanales</li>
+        <li><span class="price-check">✓</span> Revisión de tu negocio</li>
+        <li><span class="price-check">✓</span> Comunidad activa</li>
+      </ul>
+      <button class="btn-price btn-price-outline" onclick="register('membresia')">Unirme mensualmente →</button>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:24px; font-size:14px; color:var(--muted);">
+    🛡️ Garantía de 30 días — Si no ves resultados, te devolvemos el dinero sin preguntas
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="reveal" style="padding-top:0; text-align:center;">
+  <div class="section-tag">Preguntas frecuentes</div>
+  <h2 class="section-title" style="margin-bottom:40px;">Resolvemos tus <span>dudas</span></h2>
+
+  <div class="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Necesito saber programar o tener experiencia en IA? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">No. El sistema está diseñado para personas sin experiencia técnica. Si tienes un celular y wi-fi, puedes empezar hoy mismo.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Cuánto tiempo necesito dedicar al día? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Con 1-2 horas al día es suficiente para empezar. Muchos alumnos consiguen sus primeros clientes en la primera semana.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Funciona para mi país? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sí. El sistema está diseñado específicamente para México, Colombia, Argentina, Perú, Venezuela y toda Latinoamérica. Los modelos de negocio se adaptan a cada mercado.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Cuándo veo mis primeros ingresos? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Los alumnos que aplican el módulo 1 completo reportan sus primeros ingresos en la primera semana. El resultado depende de tu ejecución.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Qué pasa si no funciona para mí? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Tienes 30 días de garantía. Si aplicas el sistema y no ves resultados, te devolvemos el 100% de tu dinero sin preguntas ni complicaciones.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-question">¿Cómo accedo al contenido? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Al registrarte recibes acceso inmediato a la plataforma desde tu celular o computadora. Todo el contenido está disponible 24/7.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ LEAD CAPTURE ══════════ -->
+<section id="registro" style="max-width:100%; padding:80px 24px;">
+  <div class="lead-section reveal">
+    <h2 class="lead-title">Empieza hoy.<br><span style="color:var(--gold)">Tu primer $1,000</span><br>está más cerca de lo que crees.</h2>
+    <p class="lead-sub">Únete a los latinos que ya están generando ingresos con IA. Sin excusas. Sin esperas.</p>
+
+    <div class="lead-form" id="lead-form">
+      <input class="lead-input" id="lead-name" type="text" placeholder="Tu nombre completo">
+      <input class="lead-input" id="lead-email" type="email" placeholder="Tu correo electrónico">
+      <input class="lead-input" id="lead-whatsapp" type="tel" placeholder="Tu WhatsApp (con código de país)">
+      <button class="btn-lead" onclick="submitLead()">🚀 Quiero acceso ahora — $47 fundador</button>
+      <div class="lead-privacy">🔒 Tus datos están seguros. Sin spam. Puedes cancelar cuando quieras.</div>
+    </div>
+
+    <div class="success-msg" id="success-msg">
+      🎉 ¡Perfecto! Te contactaremos por WhatsApp en los próximos minutos con tu acceso.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Universidad de Ingresos <span>IA</span></div>
+  <div class="footer-links">
+    <a href="#">Inicio</a>
+    <a href="#precios">Precios</a>
+    <a href="#registro">Registro</a>
+    <a href="#">Términos</a>
+    <a href="#">Privacidad</a>
+    <a href="#">Contacto</a>
+  </div>
+  <div class="footer-copy">© 2025 Universidad de Ingresos IA · Todos los derechos reservados · Hecho en Latinoamérica 🌎</div>
+</footer>
+
+<script>
+// ── COUNTDOWN ──
+function updateCountdown() {
+  const stored = localStorage.getItem('uia-countdown');
+  let end;
+  if (stored) {
+    end = parseInt(stored);
+  } else {
+    end = Date.now() + 24*60*60*1000;
+    localStorage.setItem('uia-countdown', end);
+  }
+  const diff = Math.max(0, end - Date.now());
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('countdown').textContent =
+    String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── FAQ ──
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── REGISTER ──
+function register(plan) {
+  document.getElementById('registro').scrollIntoView({ behavior:'smooth' });
+  setTimeout(() => document.getElementById('lead-name').focus(), 600);
+}
+
+// ── LEAD SUBMIT ──
+function submitLead() {
+  const name = document.getElementById('lead-name').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
+  const wa = document.getElementById('lead-whatsapp').value.trim();
+
+  if (!name) { alert('Por favor ingresa tu nombre'); return; }
+  if (!email || !email.includes('@')) { alert('Por favor ingresa un email válido'); return; }
+  if (!wa) { alert('Por favor ingresa tu WhatsApp'); return; }
+
+  document.getElementById('lead-form').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+
+  // In production: send to your backend/CRM
+  console.log('Lead:', { name, email, wa });
+}
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior:'smooth' });
+  });
+});
+</script>
+</body>
+</html>
